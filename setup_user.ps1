@@ -24,6 +24,57 @@ function InstallScoopPackage
 }
 
 
+function Set-DesktopWallpaper {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)][string]$PicturePath,
+        [ValidateSet('Tiled', 'Centered', 'Stretched', 'Fill', 'Fit', 'Span')]$Style = 'Fill'
+    )
+ 
+    BEGIN 
+    {
+        $PicturePath = $(Resolve-Path $PicturePath)
+        $Definition = @"
+[DllImport("user32.dll", EntryPoint = "SystemParametersInfo")]
+public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+ 
+"@
+ 
+        Add-Type -MemberDefinition $Definition -Name Win32SystemParametersInfo -Namespace Win32Functions
+        $Action_SetDeskWallpaper = [int]20 
+        $Action_UpdateIniFile = [int]0x01
+        $Action_SendWinIniChangeEvent = [int]0x02
+ 
+        $HT_WallPaperStyle = @{
+            'Tiles'     = 0
+            'Centered'  = 0
+            'Stretched' = 2
+            'Fill'      = 10
+            'Fit'       = 6
+            'Span'      = 22
+        }
+ 
+        $HT_TileWallPaper = @{
+            'Tiles'     = 1
+            'Centered'  = 0
+            'Stretched' = 0
+            'Fill'      = 0
+            'Fit'       = 0
+            'Span'      = 0
+        }
+    }
+ 
+ 
+    PROCESS {
+        Set-ItemProperty -Path 'HKCU:\Control Panel\Desktop' -Name wallpaperstyle -Value $HT_WallPaperStyle[$Style]
+        Set-ItemProperty -Path 'HKCU:\Control Panel\Desktop' -Name wallpaperstyle -Value $HT_TileWallPaper[$Style]
+        $null = [Win32Functions.Win32SystemParametersInfo]::SystemParametersInfo($Action_SetDeskWallpaper, 0, $PicturePath, ($Action_UpdateIniFile -bor $Action_SendWinIniChangeEvent))
+    }
+ 
+    END {}
+}
+
+
 # Install packages
 Write-Host "Installing packages..."
 
@@ -117,6 +168,11 @@ Write-Host
 # Finish up
 Write-Host "Cleaning up..."
 scoop cleanup * 6>&1 5>&1 4>&1 3>&1 2>&1 >> "./log.txt"
+Write-Host
+
+# Replace the ugly ass background
+Write-Host "Setting new background image..."
+Set-DesktopWallpaper -PicturePath "./Static/bg.jpg" -Style Fill
 Write-Host
 
 Write-Host "Press enter to continue..."
