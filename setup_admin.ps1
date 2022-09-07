@@ -23,8 +23,6 @@ function InstallGlobalScoopPackage
     }
 }
 
-Clear-Host
-
 # Global packages
 InstallGlobalScoopPackage -DisplayName "Visual C Redistributables" -PackageName "vcredist"
 InstallGlobalScoopPackage -DisplayName "Vulkan" -PackageName "vulkan"
