@@ -24,16 +24,6 @@ function InstallScoopPackage
 }
 
 
-# Add scoop buckets
-Write-Host "Buckets: " -NoNewline; Write-Host "Adding..." -NoNewline -ForegroundColor Red
-scoop bucket add games 6>&1 5>&1 4>&1 3>&1 2>&1 >> "./log.txt"
-scoop bucket add extras 6>&1 5>&1 4>&1 3>&1 2>&1 >> "./log.txt"
-scoop bucket add versions 6>&1 5>&1 4>&1 3>&1 2>&1 >> "./log.txt"
-scoop bucket add java 6>&1 5>&1 4>&1 3>&1 2>&1 >> "./log.txt"
-Write-Host "`rBuckets: " -NoNewline; Write-Host "Added    "  -ForegroundColor Green
-Write-Host
-
-
 # Install packages
 Write-Host "Installing packages..."
 
@@ -50,7 +40,6 @@ InstallScoopPackage -DisplayName "OpenJDK 11" -PackageName "openjdk11"
 InstallScoopPackage -DisplayName "NodeJS" -PackageName "nodejs"
 
 # Programming tools
-InstallScoopPackage -DisplayName "Git" -PackageName "git"
 InstallScoopPackage -DisplayName "Powershell Core" -PackageName "pwsh"
 InstallScoopPackage -DisplayName "Cmder" -PackageName "cmder"
 InstallScoopPackage -DisplayName "VSCodium" -PackageName "vscodium"
