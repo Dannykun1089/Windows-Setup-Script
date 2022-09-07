@@ -26,7 +26,16 @@ function InstallGlobalScoopPackage
 # Global packages
 InstallGlobalScoopPackage -DisplayName "Visual C Redistributables" -PackageName "vcredist"
 InstallGlobalScoopPackage -DisplayName "Vulkan" -PackageName "vulkan"
+InstallGlobalScoopPackage -DisplayName "OpenSSL" -PackageName "openssl"
 InstallGlobalScoopPackage -DisplayName "Aria2" -PackageName "aria2"
+
+
+# Disable Aria2 warning message
+scoop config aria2-warning-enabled false 6>&1 5>&1 4>&1 3>&1 2>&1 >> "./log.txt"
+Write-Host "Aria2 warning message: " -NoNewline
+Write-Host "Disabled" -ForegroundColor Red
+Write-Host
+
 
 Write-Host "Press enter to continue..."
 Read-Host

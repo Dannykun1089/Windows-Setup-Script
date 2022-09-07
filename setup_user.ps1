@@ -25,41 +25,29 @@ function InstallScoopPackage
 
 
 # Add scoop buckets
-Write-Host "Buckets: " -NoNewline
-Write-Host "Adding..." -NoNewline -ForegroundColor Cyan
-Write-Host "`rBuckets: " -NoNewline
+Write-Host "Buckets: " -NoNewline; Write-Host "Adding..." -NoNewline -ForegroundColor Cyan
 scoop bucket add games 6>&1 5>&1 4>&1 3>&1 2>&1 >> "./log.txt"
 scoop bucket add extras 6>&1 5>&1 4>&1 3>&1 2>&1 >> "./log.txt"
 scoop bucket add versions 6>&1 5>&1 4>&1 3>&1 2>&1 >> "./log.txt"
 scoop bucket add java 6>&1 5>&1 4>&1 3>&1 2>&1 >> "./log.txt"
-Write-Host "Added    "  -ForegroundColor Green
-Write-Host
-
-
-# Configure scoop
-scoop config aria2-warning-enabled false 6>&1 5>&1 4>&1 3>&1 2>&1 >> "./log.txt"
-Write-Host "Aria2 warning message: " -NoNewline
-Write-Host "Disabled" -ForegroundColor Red
+Write-Host "`rBuckets: " -NoNewline; Write-Host "Added    "  -ForegroundColor Green
 Write-Host
 
 
 # Install packages
 Write-Host "Installing packages..."
 
-# Essential libraries
-InstallScoopPackage -DisplayName "Aria2" -PackageName "aria2"
-
 # Essential tools
 InstallScoopPackage -DisplayName "7Zip ZSTD" -PackageName "7zip-zstd"
 InstallScoopPackage -DisplayName "Ungoogled Chromium" -PackageName "ungoogled-chromium"
 
 # Compilers, interpreters and the like
-InstallScoopPackage -DisplayName "NodeJS" -PackageName "nodejs"
-InstallScoopPackage -DisplayName "OpenJDK 11" -PackageName "openjdk11"
 InstallScoopPackage -DisplayName "Python 2.7" -PackageName "python27"
 InstallScoopPackage -DisplayName "Python 3.8" -PackageName "python38"
 InstallScoopPackage -DisplayName ".NET 6 SDK" -PackageName "dotnet6-sdk"
 InstallScoopPackage -DisplayName "MinGW" -PackageName "mingw"
+InstallScoopPackage -DisplayName "OpenJDK 11" -PackageName "openjdk11"
+InstallScoopPackage -DisplayName "NodeJS" -PackageName "nodejs"
 
 # Programming tools
 InstallScoopPackage -DisplayName "Git" -PackageName "git"
@@ -68,6 +56,12 @@ InstallScoopPackage -DisplayName "Cmder" -PackageName "cmder"
 InstallScoopPackage -DisplayName "VSCodium" -PackageName "vscodium"
 InstallScoopPackage -DisplayName "DnSpy" -PackageName "dnspy"
 InstallScoopPackage -DisplayName "Ghidra" -PackageName "ghidra"
+InstallScoopPackage -DisplayName "x64dbg" -PackageName "x64dbg"
+InstallScoopPackage -DisplayName "ImHex" -PackageName "imhex"
+InstallScoopPackage -DisplayName "Maven" -PackageName "maven"
+InstallScoopPackage -DisplayName "CMake" -PackageName "cmake"
+InstallScoopPackage -DisplayName "Make" -PackageName "make"
+
 
 # Social media and communication
 InstallScoopPackage -DisplayName "Discord" -PackageName "discord"
@@ -103,25 +97,38 @@ InstallScoopPackage -DisplayName "Yuzu" -PackageName "yuzu"
 
 # Misc
 InstallScoopPackage -DisplayName "Rainmeter" -PackageName "rainmeter"
+InstallScoopPackage -DisplayName "OnlyOffice" -PackageName "onlyoffice-desktopeditors"
+InstallScoopPackage -DisplayName "OBS" -PackageName "obs-studio"
 InstallScoopPackage -DisplayName "MegaSync" -PackageName "megasync"
 InstallScoopPackage -DisplayName "HWInfo" -PackageName "hwinfo"
+InstallScoopPackage -DisplayName "VirtualBox" -PackageName "portable-virtualbox"
 InstallScoopPackage -DisplayName "GNUPG" -PackageName "gnupg"
-InstallScoopPackage -DisplayName "Monero" -PackageName "monero"
 InstallScoopPackage -DisplayName "Flash Player" -PackageName "flashplayer-sa"
+InstallScoopPackage -DisplayName "Monero" -PackageName "monero"
+InstallScoopPackage -DisplayName "ADB" -PackageName "adb"
 
 Write-Host
 
 # Disable telemetry for installed applications where possible
 Write-Host "Disabling application telemetry..."
+Write-Host "Powershell Core Telemetry: " -NoNewline; Write-Host "Enabled" -ForegroundColor Green
 [System.Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT','1',[System.EnvironmentVariableTarget]::User)
-Write-Host "Powershell Core Telemetry: " -NoNewline; Write-Host "Disabled" -ForegroundColor Red
+Write-Host "`rPowershell Core Telemetry: " -NoNewline; Write-Host "Disabled" -ForegroundColor Red
+
+Write-Host
 
 # Patch in static files
+Write-Host "Applying dark theme patches..."
+Write-Host "7Zip " -NoNewline; Write-Host "[ ]" -NoNewline -ForegroundColor Red
+Copy-Item "./Static/7zFM Dark.exe" "$env:USERPROFILE\scoop\apps\7zip\current\7zFM.exe"
+Write-Host "`r7Zip " -NoNewline; Write-Host "[X]" -ForegroundColor Green
 
+Write-Host
 
 # Finish up
-scoop cleanup *
-scoop reset python
+Write-Host "Cleaning up..."
+scoop cleanup * 6>&1 5>&1 4>&1 3>&1 2>&1 >> "./log.txt"
+Write-Host
 
 Write-Host "Press enter to continue..."
 Read-Host
