@@ -1,4 +1,4 @@
-# If it isn't already, enable TLS 1.2 for secure connections
+# If it isn't already, enable TLS 1.2 for secure connection to scoop.sh
 # (This modification goes back to normal after the console exits)
 if (![System.Net.ServicePointManager]::SecurityProtocol.HasFlag([System.Net.SecurityProtocolType]::Tls12))
 {

@@ -25,7 +25,7 @@ function InstallScoopPackage
 
 
 # Add scoop buckets
-Write-Host "Buckets: " -NoNewline; Write-Host "Adding..." -NoNewline -ForegroundColor Cyan
+Write-Host "Buckets: " -NoNewline; Write-Host "Adding..." -NoNewline -ForegroundColor Red
 scoop bucket add games 6>&1 5>&1 4>&1 3>&1 2>&1 >> "./log.txt"
 scoop bucket add extras 6>&1 5>&1 4>&1 3>&1 2>&1 >> "./log.txt"
 scoop bucket add versions 6>&1 5>&1 4>&1 3>&1 2>&1 >> "./log.txt"
@@ -111,9 +111,9 @@ Write-Host
 
 # Disable telemetry for installed applications where possible
 Write-Host "Disabling application telemetry..."
-Write-Host "Powershell Core Telemetry: " -NoNewline; Write-Host "Enabled" -ForegroundColor Green
+Write-Host "Powershell Core Telemetry: " -NoNewline; Write-Host "Enabled" -ForegroundColor Red
 [System.Environment]::SetEnvironmentVariable('POWERSHELL_TELEMETRY_OPTOUT','1',[System.EnvironmentVariableTarget]::User)
-Write-Host "`rPowershell Core Telemetry: " -NoNewline; Write-Host "Disabled" -ForegroundColor Red
+Write-Host "`rPowershell Core Telemetry: " -NoNewline; Write-Host "Disabled" -ForegroundColor Green
 
 Write-Host
 
