@@ -84,7 +84,7 @@ InstallScoopPackage -DisplayName "Ungoogled Chromium" -PackageName "ungoogled-ch
 
 # Compilers, interpreters and the like
 InstallScoopPackage -DisplayName "Python 2.7" -PackageName "python27"
-InstallScoopPackage -DisplayName "Python 3.8" -PackageName "python38"
+InstallScoopPackage -DisplayName "Python 3" -PackageName "python"
 InstallScoopPackage -DisplayName ".NET 6 SDK" -PackageName "dotnet6-sdk"
 InstallScoopPackage -DisplayName "MinGW" -PackageName "mingw"
 InstallScoopPackage -DisplayName "OpenJDK 11" -PackageName "openjdk11"
